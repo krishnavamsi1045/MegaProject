@@ -5,20 +5,22 @@ import dotenv from 'dotenv';
 import connectDB from "./db/index.js";
 import colors from 'colors'
 
-dotenv.config();
+import {app} from './app.js'
 
-const app = express();
 
-const PORT = process.env.PORT || 5000;
+
+
 connectDB()
-app.use("/", (req, res) => {
-    res.send("Api is Running");
-  });
-  
-  app.listen(PORT, () => {
-    console.log(`Server Started on ${process.env.PORT}`.yellow.bold);
-  });
-//connect()
+.then(()=>{
+    console.log(`db connected man`);
+    app.on("error",()=>{console.log("error connection app")})
+    app.listen(process.env.PORT || 1000,()=>{console.log(`app connected at : http://localhost:${process.env.PORT}`);
+    })
+    
+    
+})
+.catch((error)=>{})
+
 
 /*
 
